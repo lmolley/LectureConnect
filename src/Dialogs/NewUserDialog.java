@@ -6,14 +6,15 @@ import javax.swing.*;
 
 public class NewUserDialog extends JDialog
 {
-	String uniqname;
+	String username;
 	char[] password;
+	Integer ID;
 	
   public NewUserDialog(final JFrame mainFrame, String title)
   {
     //call JDialog constructor
     super(mainFrame, title, true);
-    setLayout(new GridLayout(4,1));
+    setLayout(new GridLayout(5,1));
     setResizable(true); 
     
     JButton okay_button;
@@ -21,11 +22,18 @@ public class NewUserDialog extends JDialog
     final JTextField name_enter;
     final JPasswordField password_enter;
     final JPasswordField password_reenter;
+    final JTextField id_enter;
+    
     
     JPanel row1 = new JPanel();
-    row1.add(new JLabel("Uniquename: "));
+    row1.add(new JLabel("Username: "));
     name_enter = new JTextField(20);
     row1.add(name_enter);
+    
+    JPanel idrow = new JPanel();
+    idrow.add(new JLabel("UM ID #:"));
+    id_enter = new JTextField(20);
+    idrow.add(id_enter);
     
     JPanel row2 = new JPanel();
     row2.add(new JLabel("Password: "));
@@ -43,7 +51,7 @@ public class NewUserDialog extends JDialog
     {
                   public void actionPerformed(ActionEvent e)
                   {
-                    uniqname = name_enter.getText();
+                    username = name_enter.getText();
                     password = password_enter.getPassword(); 
                     setVisible(false);
                   }
@@ -62,6 +70,7 @@ public class NewUserDialog extends JDialog
     row4.add(okay_button);
     
     add(row1);
+    add(idrow);
     add(row2);
     add(row3);
     add(row4);
@@ -72,10 +81,14 @@ public class NewUserDialog extends JDialog
     
    public String getName() 
    {
-  	 return uniqname;
+  	 return username;
    }
    public char[] getPassword()
    {
   	 return password;
+   }
+   public Integer getID()
+   {
+  	 return ID;
    }
 };

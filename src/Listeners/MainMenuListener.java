@@ -2,11 +2,11 @@ package Listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import Dialogs.NewUserDialog;
+import GUI.MainMenuFrame;
 
 import javax.swing.JFrame;
-
-import MainMenu.MainMenuFrame;
 
 public class MainMenuListener implements ActionListener
 {

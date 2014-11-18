@@ -1,5 +1,7 @@
-import MainMenu.MainMenuFrame;
+import GUI.MainMenuFrame;
+
 import javax.swing.*;
+
 import java.awt.*;
 
 
