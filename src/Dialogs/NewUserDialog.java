@@ -7,14 +7,16 @@ import javax.swing.*;
 public class NewUserDialog extends JDialog
 {
 	String username;
-	char[] password;
+	String password;
 	Integer ID;
+	boolean cancelled;
+	boolean student;
 	
   public NewUserDialog(final JFrame mainFrame, String title)
   {
     //call JDialog constructor
     super(mainFrame, title, true);
-    setLayout(new GridLayout(5,1));
+    setLayout(new GridLayout(6,1));
     setResizable(true); 
     
     JButton okay_button;
@@ -23,7 +25,8 @@ public class NewUserDialog extends JDialog
     final JPasswordField password_enter;
     final JPasswordField password_reenter;
     final JTextField id_enter;
-    
+    final JCheckBox student_chooser;
+    final JCheckBox teacher_chooser;
     
     JPanel row1 = new JPanel();
     row1.add(new JLabel("Username: "));
@@ -45,6 +48,34 @@ public class NewUserDialog extends JDialog
     password_reenter = new JPasswordField(20);
     row3.add(password_reenter);
     
+    JPanel type_select = new JPanel();
+    type_select.add(new JLabel("Student"));
+    student_chooser = new JCheckBox();
+    student_chooser.setSelected(true);
+    student = true;
+    type_select.add(student_chooser);
+    type_select.add(new JLabel("Teacher"));
+    teacher_chooser = new JCheckBox();
+    type_select.add(teacher_chooser);
+    
+    student_chooser.addActionListener(new ActionListener()
+    {
+    							public void actionPerformed(ActionEvent e)
+    							{
+    								teacher_chooser.setSelected(false);
+    								student = true;
+    							}
+    });
+    
+    teacher_chooser.addActionListener(new ActionListener()
+    {
+    							public void actionPerformed(ActionEvent e)
+    							{
+    								student_chooser.setSelected(false);
+    								student = false;
+    							}
+    }); 
+    
     JPanel row4 = new JPanel();
     okay_button = new JButton("Finish");
     okay_button.addActionListener(new ActionListener()
@@ -52,7 +83,10 @@ public class NewUserDialog extends JDialog
                   public void actionPerformed(ActionEvent e)
                   {
                     username = name_enter.getText();
-                    password = password_enter.getPassword(); 
+                    char[] password_array = password_enter.getPassword();
+                    password = String.copyValueOf(password_array);
+                    ID = Integer.parseInt(id_enter.getText());
+                    cancelled = false;
                     setVisible(false);
                   }
                   });
@@ -62,6 +96,7 @@ public class NewUserDialog extends JDialog
     {
     							public void actionPerformed(ActionEvent e)
     							{
+    								cancelled = true;
     								setVisible(false);
     							}
     });
@@ -73,6 +108,7 @@ public class NewUserDialog extends JDialog
     add(idrow);
     add(row2);
     add(row3);
+    add(type_select);
     add(row4);
     
     pack();
@@ -83,12 +119,20 @@ public class NewUserDialog extends JDialog
    {
   	 return username;
    }
-   public char[] getPassword()
+   public String getPassword()
    {
   	 return password;
    }
    public Integer getID()
    {
   	 return ID;
+   }
+   public boolean didCancel()
+   {
+  	 return cancelled;
+   }
+   public boolean isStudent()
+   {
+  	 return student;
    }
 };
