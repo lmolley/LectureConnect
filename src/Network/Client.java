@@ -10,8 +10,6 @@ public class Client{
     public String name;
     public String uniqname;
     public int ID;
-    public int score = 0;
-    public int num_questions = 0;
     
     InetAddress addr;
     Socket connectionSocket;
@@ -76,6 +74,58 @@ public class Client{
         }
         return string;
     }
+    
+    public void sendName(){
+        sendRequest(2);
+        try{
+            objectOut.writeObject(name);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void sendUniq(){
+        sendRequest(3);
+        try{
+            objectOut.writeObject(uniqname);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void sendUMID(){
+        sendRequest(4);
+        try{
+            objectOut.writeObject(ID);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void sendNumCorrect(int i){
+        sendRequest(5);
+        try{
+            objectOut.writeObject(i);
+        }
+        catch(Exception e){
+            e.printStackTrace();  
+        }
+    }
+    
+    public void sendNumQuestions(int i){
+        sendRequest(6);
+        try{
+            objectOut.writeObject(i);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    
     
     public void closeConnection(){
         try {

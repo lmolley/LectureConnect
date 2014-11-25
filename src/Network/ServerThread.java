@@ -9,6 +9,12 @@ class ServerThread extends Thread{
     ObjectInputStream objectIn;
     ObjectOutputStream objectOut;
     
+    
+    int studentID;
+    int numCorrect = 0, numQuestions = 0;
+    String studentName, studentUniq;
+    
+    
     //this is the only thing to be sent as of now
     //slides will also be sent eventually
     String entireQuizFile;
@@ -45,11 +51,26 @@ class ServerThread extends Thread{
             case 0:
                 objectOut.writeObject(entireQuizFile);
                 break;
-                
             case 1:
                 objectOut.writeObject("test String from Server");
                 break;
-            }//switch
+            case 2://receive name
+                studentName = (String) objectIn.readObject();
+                break;
+            case 3://receive uniq
+                studentUniq = (String) objectIn.readObject();
+                break;
+            case 4://receive ID
+                studentID = (Integer) objectIn.readObject();
+                break;
+            case 5://receive numCorrect
+                numCorrect = (Integer) objectIn.readObject();
+                break;
+            case 6://receive numQuestions
+                numQuestions = (Integer) objectIn.readObject();
+                break;
+   
+            }//switch 
         }//try 
  
         catch (Exception e) {
