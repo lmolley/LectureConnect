@@ -1,25 +1,23 @@
 package GUI;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import Listeners.StudentMainListener;
 import Network.Client;
 
+@SuppressWarnings("serial")
 public class StudentMainGUI extends JPanel
 {
 	JPanel parent;
@@ -28,6 +26,8 @@ public class StudentMainGUI extends JPanel
 	public JButton leave_class_button;
 	public JButton confused_button;
 	public JButton start_quiz_button;
+	public JTextArea ta;
+	public JTextField tf;
 	StudentMainListener mainListener;
 	
 	public StudentMainGUI(JPanel parent_in, Client client_in)
@@ -81,13 +81,27 @@ public class StudentMainGUI extends JPanel
 			System.out.println("Couldn't get button images");
 		}
 		
+		JPanel bottom = new JPanel();
+		bottom.setLayout(new BoxLayout(bottom, BoxLayout.PAGE_AXIS));
+		
 		JPanel lecture_view = new JPanel();
 		
 		JPanel chat_view = new JPanel();
+		chat_view.setLayout(new BoxLayout(chat_view, BoxLayout.PAGE_AXIS));
+		chat_view.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		tf = new JTextField("");
+    ta = new JTextArea("");
+    ta.setEditable(false);
+    ta.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		chat_view.add(tf);
+		chat_view.add(ta);
+		chat_view.setSize(100, 100);
+		
+		bottom.add(lecture_view);
+		bottom.add(chat_view);
 		
 		add(options, BorderLayout.NORTH);
-		add(lecture_view, BorderLayout.CENTER);
-		add(chat_view, BorderLayout.EAST);
+		add(bottom, BorderLayout.CENTER);
 		setVisible(true);
 	}
 
