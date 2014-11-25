@@ -83,8 +83,11 @@ public class StudentMainGUI extends JPanel
 		
 		JPanel lecture_view = new JPanel();
 		
+		JPanel chat_view = new JPanel();
+		
 		add(options, BorderLayout.NORTH);
 		add(lecture_view, BorderLayout.CENTER);
+		add(chat_view, BorderLayout.EAST);
 		setVisible(true);
 	}
 
