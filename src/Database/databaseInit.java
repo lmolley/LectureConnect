@@ -13,7 +13,9 @@ public class databaseInit
     String sql = "CREATE TABLE STUDENTS " +
                  "(ID INT PRIMARY KEY     NOT NULL," +
                  " UNIQNAME           TEXT    NOT NULL," + 
-                 " NAME            TEXT     NOT NULL)"; 
+                 " NAME            TEXT     NOT NULL," + 
+                 "CORRECT       INT      NOT NULL," + 
+                 "OUT_OF       INT      NOT NULL"+ ")"; 
     stmt.executeUpdate(sql);
     stmt.close();
 	}
