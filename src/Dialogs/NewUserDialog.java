@@ -1,8 +1,11 @@
 package Dialogs;
+import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.*;
 
 import javax.swing.*;
+
+import GUI.MainMenuFrame;
 
 public class NewUserDialog extends JDialog
 {
@@ -12,10 +15,10 @@ public class NewUserDialog extends JDialog
 	boolean cancelled;
 	boolean student;
 	
-  public NewUserDialog(final JFrame mainFrame, String title)
+  public NewUserDialog(final JPanel mainFrame, String title)
   {
     //call JDialog constructor
-    super(mainFrame, title, true);
+    super();
     setLayout(new GridLayout(6,1));
     setResizable(true); 
     
