@@ -1,6 +1,7 @@
 package Network;
 
 import java.net.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 
@@ -8,7 +9,7 @@ class ServerThread extends Thread{
     Socket connectionSocket;
     ObjectInputStream objectIn;
     ObjectOutputStream objectOut;
-    
+    List<BufferedImage> lecture;
     
     int studentID;
     int numCorrect = 0, numQuestions = 0;
@@ -68,6 +69,9 @@ class ServerThread extends Thread{
                 break;
             case 6://receive numQuestions
                 numQuestions = (Integer) objectIn.readObject();
+                break;
+            case 7://push lecture slides
+                objectOut.writeObject(lecture);
                 break;
    
             }//switch 

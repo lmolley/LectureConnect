@@ -1,6 +1,7 @@
 package Network;
 
 import java.net.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 
@@ -10,6 +11,7 @@ public class Client{
     public String name;
     public String uniqname;
     public int ID;
+    List<BufferedImage> lectureSlideList;
     
     InetAddress addr;
     Socket connectionSocket;
@@ -125,7 +127,15 @@ public class Client{
         }
     }
     
-    
+    public void updateLectureSlideContainer(int i){
+        sendRequest(7);
+        try{
+            lectureSlideList = (List<BufferedImage>) objectIn.readObject();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
     
     public void closeConnection(){
         try {

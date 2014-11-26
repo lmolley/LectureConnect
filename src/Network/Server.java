@@ -1,6 +1,7 @@
 package Network;
 
 import java.net.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 
@@ -8,7 +9,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 import Network.ServerThread;
-
+//testing push
 public class Server{
 		public boolean acceptingClients = true;
 		
@@ -110,7 +111,14 @@ public class Server{
     {
     	return threads.size();
     }
-
+    
+    public void pushLectureToThreads(List<BufferedImage> lecture_in){
+        if (threads.isEmpty())
+            return;
+        for (ServerThread st : serverThreads){
+            st.lecture = lecture_in;
+        }
+    }
     
     
 }
