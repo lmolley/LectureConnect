@@ -5,8 +5,13 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
 
 import Network.ServerThread;
 //testing push
@@ -112,7 +117,30 @@ public class Server{
     	return threads.size();
     }
     
-    public void pushLectureToThreads(List<BufferedImage> lecture_in){
+    public void loadLecture(File target_pdf){
+        PDDocument doc = null;
+        try {
+            doc = PDDocument.load(target_pdf);
+            List<PDPage> docPages = doc.getDocumentCatalog().getAllPages();
+            ArrayList<BufferedImage> new_lecture = new ArrayList<BufferedImage>();
+            for (PDPage page : docPages) {
+                    BufferedImage image = page.convertToImage();
+                    new_lecture.add(image);
+            }
+            pushLectureToThreads(new_lecture);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                doc.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        
+    }
+    
+    private void pushLectureToThreads(ArrayList<BufferedImage> lecture_in){
         if (threads.isEmpty())
             return;
         for (ServerThread st : serverThreads){

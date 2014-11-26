@@ -9,7 +9,7 @@ class ServerThread extends Thread{
     Socket connectionSocket;
     ObjectInputStream objectIn;
     ObjectOutputStream objectOut;
-    List<BufferedImage> lecture;
+    ArrayList<BufferedImage> lecture;
     
     int studentID;
     int numCorrect = 0, numQuestions = 0;

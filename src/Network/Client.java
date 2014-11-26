@@ -11,7 +11,7 @@ public class Client{
     public String name;
     public String uniqname;
     public int ID;
-    List<BufferedImage> lectureSlideList;
+    ArrayList<BufferedImage> lectureSlideList;
     
     InetAddress addr;
     Socket connectionSocket;
@@ -130,7 +130,7 @@ public class Client{
     public void updateLectureSlideContainer(int i){
         sendRequest(7);
         try{
-            lectureSlideList = (List<BufferedImage>) objectIn.readObject();
+            lectureSlideList = (ArrayList<BufferedImage>) objectIn.readObject();
         }
         catch(Exception e){
             e.printStackTrace();
