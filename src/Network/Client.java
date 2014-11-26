@@ -5,13 +5,17 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 
-public class Client{
+import GUI.StudentMainGUI;
+
+
+public class Client implements Runnable{
     String host, timeStamp;
     int port;
     public String name;
     public String uniqname;
     public int ID;
     ArrayList<BufferedImage> lectureSlideList;
+    private StudentMainGUI mainGUI;
     
     InetAddress addr;
     Socket connectionSocket;
@@ -34,12 +38,50 @@ public class Client{
         
             objectOut = new ObjectOutputStream(connectionSocket.getOutputStream());
             objectIn = new ObjectInputStream(connectionSocket.getInputStream());
-        
+            new Thread(this).start();
         } 
         catch(Exception e){
             System.out.println(e);
         }
     }
+    
+    public void run()
+    {
+      try
+      {
+        while(true)   
+        {
+          String message = (String) objectIn.readObject();
+          //System.out.println(message);
+          mainGUI.ta.append(message+"\n");  
+        }
+      }
+      catch(Exception e)
+      {
+        System.out.println(e);
+      }
+    }
+    
+    public void processMessage(String message)
+    {
+      try
+      {
+        sendRequest(8);
+        objectOut.writeObject(name+": "+message);        
+        mainGUI.tf.setText("");
+      }
+      catch(IOException ie)
+      {
+        System.out.println("76");
+        System.out.println(ie);
+      }
+    }
+    
+    public void setGUI(StudentMainGUI inGUI)
+    {
+      mainGUI = inGUI;
+    }
+    
     
     private void sendRequest(int reqNum){
         try {
@@ -48,8 +90,6 @@ public class Client{
             e.printStackTrace();
         }
     }
-    
-    
     
     public String getQuizString(){
         sendRequest(0);

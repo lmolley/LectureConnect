@@ -86,15 +86,15 @@ public class StudentMainGUI extends JPanel
 		
 		JPanel lecture_view = new JPanel();
 		
-		JPanel chat_view = new JPanel();
-		chat_view.setLayout(new BoxLayout(chat_view, BoxLayout.PAGE_AXIS));
+		JPanel chat_view = new JPanel(new BorderLayout());
 		chat_view.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		tf = new JTextField("");
     ta = new JTextArea("");
     ta.setEditable(false);
     ta.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		chat_view.add(tf);
-		chat_view.add(ta);
+    tf.addActionListener(mainListener);
+		chat_view.add("South", tf);
+		chat_view.add("Center",ta);
 		chat_view.setSize(100, 100);
 		
 		bottom.add(lecture_view);
@@ -103,6 +103,7 @@ public class StudentMainGUI extends JPanel
 		add(options, BorderLayout.NORTH);
 		add(bottom, BorderLayout.CENTER);
 		setVisible(true);
+		myClient.setGUI(this);
 	}
 
 	public void switchCardView(String name)

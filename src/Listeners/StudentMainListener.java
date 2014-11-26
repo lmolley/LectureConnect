@@ -52,7 +52,7 @@ public class StudentMainListener implements ActionListener
 		}
 		else if (e.getSource() == mainFrame.tf)
 		{
-		  
+		  myClient.processMessage(e.getActionCommand());
 		}
   }
 }

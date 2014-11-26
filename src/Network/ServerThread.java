@@ -10,7 +10,7 @@ class ServerThread extends Thread{
     ObjectInputStream objectIn;
     ObjectOutputStream objectOut;
     ArrayList<BufferedImage> lecture;
-    
+    Server server;
     int studentID;
     int numCorrect = 0, numQuestions = 0;
     String studentName, studentUniq;
@@ -21,10 +21,11 @@ class ServerThread extends Thread{
     String entireQuizFile;
     int ID;
     
-    ServerThread(Socket s, int ID_in){
+    ServerThread(Socket s, int ID_in, Server in_server){
         ID = ID_in;
         connectionSocket = s;
         entireQuizFile = "";
+        server = in_server;
         try{
             objectIn = new ObjectInputStream(s.getInputStream());
             objectOut = new ObjectOutputStream(s.getOutputStream());
@@ -73,6 +74,13 @@ class ServerThread extends Thread{
             case 7://push lecture slides
                 objectOut.writeObject(lecture);
                 break;
+            case 8:
+              String message = (String) objectIn.readObject();
+              server.sendToAll(message);
+              break;
+            default:
+              System.out.println("Error, reached default clause");
+              break;
    
             }//switch 
         }//try 

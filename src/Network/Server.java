@@ -48,7 +48,7 @@ public class Server{
     public void spinThread(){
         try{
             connectionSocket = serverSocket.accept();
-            ServerThread st = new ServerThread(connectionSocket, ID++);
+            ServerThread st = new ServerThread(connectionSocket, ID++, this);
             Runnable runnable = st;
             Thread thread = new Thread(runnable);
             threads.add(thread);
@@ -148,6 +148,21 @@ public class Server{
         }
     }
     
+    public void sendToAll(String message)
+    {
+      synchronized(serverThreads)
+      {
+        for (ServerThread st : serverThreads)
+        {
+          try {
+            st.objectOut.writeObject(message);
+          }
+          catch (IOException ie) {
+            System.out.println(ie);
+          }
+        }
+      }
+    }
     
 }
 
